@@ -629,6 +629,10 @@ Number.prototype.toRad = function() {
 
 .controller('walkerCtrl', function($scope, $stateParams, $state, $ionicPopup) {
 
+  $scope.dogs = [
+    {name:'Lucky', time:'5:45' ,where: 'Robina'}];
+  $scope.requests = ["Monti @ 5:45", "Ringo @ 2:30"];
+
   $scope.findDog = function(){
     $state.go('dogswipe')
     console.log("Should go to dogswipe")
