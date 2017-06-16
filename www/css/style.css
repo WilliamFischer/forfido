@@ -1051,29 +1051,21 @@ input[type="file"]{
 /* Walker Tab */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*.walker button{
 	width: 80%;
 	height: 50px;
 =======
 .walker .list{
 >>>>>>> origin/master
+=======
+.walker button{
+	width: 80%;
+	height: 50px;
+>>>>>>> parent of 6c6ff2c... walker page
 	top:15vh;
-	width:85%;
-}
-.walker .item1{
-	font-family: 'Fredoka One', cursive;
-	color: #68B4A6;
-	background-color: white;
 	border:none;
-	font-size: 20px;
-	margin-bottom: 10px;
-}
-
-.walker .item2{
-	font-family: 'Fredoka One', cursive;
-	color: #6C6049;
-	background-color: white;
-	border:none;
+<<<<<<< HEAD
 	font-size: 20px;
 	margin-bottom: 10px;
 }
@@ -1099,21 +1091,14 @@ input[type="file"]{
 	background-color: #a6d4de;
 	border:none;
 	height:20vh;
+=======
+	background-color: #EEEEEE;
+>>>>>>> parent of 6c6ff2c... walker page
 	border-radius: 10px;
-	margin-bottom: 20px;
+	margin-top: 5%;
 }
-
-.walker .findDog{
-	margin-top:20vh;
-	width:65%;
-	height:50px;
-	border-radius: 10px;
-	border:none;
-	font-family: 'Fredoka One', cursive;
-	background-color: #6C6049;
-	color: white;
-	font-size: 20px;
-	text-transform: uppercase;
+.walker button:first-child{
+	margin-top: 40vh;
 }
 >>>>>>> origin/master
 
