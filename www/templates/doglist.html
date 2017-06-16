@@ -1,4 +1,4 @@
-<ion-view class="doglist">
+<ion-view class="animated slideInLeft doglist">
 
 	<script id="dogmodal.html" type="text/ng-template">
 	  <ion-modal-view class="adddogmodal">
@@ -7,12 +7,16 @@
 	      <h1 class="title">Add Dog</h1>
 	    </ion-header-bar>
 	    <ion-content>
-			<div id="upload-file-container" >
+
+	    	<img src="https://media.giphy.com/media/xUPGciElNYVE4PKc4o/giphy.gif" ng-if="showloading" style="width: 50vw;">
+	    	<img class="myimage" ng-src="{{me}}" ng-if="me">
+
+			<div id="upload-file-container" onclick="document.getElementById('file').click()" ng-if="showfile">
 				<p>Click to add photo</p>
 				<input class="fileinput" type="file" id="file" onchange="angular.element(this).scope().achange()">
 			</div>
-
-			<button  class = "upload" ng-click="uploadfile()">Upload Photo</button>
+<!-- 
+			<button  class = "upload" ng-click="uploadfile()">Upload Photo</button> -->
 			
 			<center>
 				<input type="text" placeholder="Dog Name" />
@@ -40,6 +44,9 @@
 			<h2>Labrodor</h2>
 			<p>A beautiful dog that likes to run and jump and stuff</p>
 			<img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Too-cute-doggone-it-video-playlist.jpg">
+		</div>
+		<div class="logoutIcon">
+			<i class = "icon ion-power" ng-click="logOut()"></i>
 		</div>
 	</ion-content>
 

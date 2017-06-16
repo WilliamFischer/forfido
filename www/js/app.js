@@ -24,11 +24,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'firebase', 'ionic.co
           console.log("signed out of passowrd")
         }).catch(function(error) {});
       }else{
-        // $state.go('app.dogswipe')
+        $state.go('doglist')
       }
     }else if(epuser){
       console.log("Accessed with Password " + epuser.email)
-      $state.go('dogswipe')
+      $state.go('tabs')
     }else{
       $state.go('signin')
     }
@@ -61,21 +61,36 @@ angular.module('starter', ['ionic', 'starter.controllers', 'firebase', 'ionic.co
 
   $stateProvider
 
-    .state('app', {
-    url: '/app',
-    abstract: true,
-    templateUrl: 'templates/menu.html',
-    controller: 'AppCtrl'
-  })
+  .state('tabs', {
+      url: "/tabs",
+      abstract: false,
+      templateUrl: "templates/tabs.html"
+    })
 
-  .state('app.dogswipe', {
-    url: '/dogswipe',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/dogswipe.html',
-        controller: 'DogSwipeCtrl'
+  .state('tabs.walker', {
+      url: "/walker",
+      views: {
+        'walker-tab': {
+          templateUrl: "templates/walker.html",
+          controller: 'walkerCtrl'
+        }
       }
-    }
+    })
+
+   .state('tabs.owner', {
+      url: "/owner",
+      views: {
+        'owner-tab': {
+          templateUrl: "templates/doglist.html",
+          controller: 'DogListCtrl'
+        }
+      }
+    })
+
+   .state('dogswipe', {
+      url: '/dogswipe',
+      templateUrl: 'templates/dogswipe.html',
+      controller: 'DogSwipeCtrl'
   })
   
   .state('moreInfo', {
@@ -89,6 +104,46 @@ angular.module('starter', ['ionic', 'starter.controllers', 'firebase', 'ionic.co
     templateUrl: 'templates/walk.html',
     controller: 'walkCtrl'
   })
+
+  // NEW 
+
+  // .state('walker', {
+  //   url: '/walker',
+  //   templateUrl: 'templates/walker.html',
+  //   controller: 'walkerCtrl'
+  // })
+
+  // .state('owner', {
+  //   url: '/owner',
+  //   templateUrl: 'templates/owner.html',
+  //   controller: 'ownerCtrl'
+  // })
+
+  .state('rating', {
+    url: '/rating',
+    templateUrl: 'templates/rating.html',
+    controller: 'ratingCtrl'
+  })
+
+  .state('donate', {
+    url: '/donate',
+    templateUrl: 'templates/donate.html',
+    controller: 'donateCtrl'
+  })
+
+  .state('thanks', {
+    url: '/thanks',
+    templateUrl: 'templates/thanks.html',
+    controller: 'thanksCtrl'
+  })
+
+  // .state('home', {
+  //   url: '/home',
+  //   templateUrl: 'templates/home.html',
+  //   controller: 'homeCtrl'
+  // })
+
+  // END NEW 
 
   .state('doglist', {
     url: '/doglist',
@@ -106,44 +161,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'firebase', 'ionic.co
     url: '/register',
     templateUrl: 'templates/register.html',
     controller: 'registerCtrl'
-  })
-
-  .state('app.search', {
-    url: '/search',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/search.html'
-      }
-    }
-  })
-
-  .state('app.browse', {
-      url: '/browse',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/browse.html'
-        }
-      }
-    })
-    .state('app.playlists', {
-      url: '/playlists',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/playlists.html',
-          controller: 'PlaylistsCtrl'
-        }
-      }
-    })
-
-  .state('app.single', {
-    url: '/playlists/:playlistId',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
-      }
-    }
   });
+  
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('signin');
 });

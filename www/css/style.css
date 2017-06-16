@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Fredoka+One|Lato:300,400,700');
 
-
 /* DOG PAGE */
 
 .dogpage{
@@ -525,6 +524,8 @@
 
 }
 
+/* Dogs list Page */
+
 .doglist{
 	background-color: #ecf0f1;
 }
@@ -601,10 +602,14 @@
 } 
 
 .doglist .barbrown{
+	margin-bottom: 10vh;
 	background-color: #6C6049;
 	font-family: 'Fredoka One', cursive;
 	color: #fff;
 	text-transform: uppercase;
+	width:60%;
+	left:20%;
+	border-radius:30px;
 }
 .doglist .barbrown .roundicon{
 	margin-right: 2%;
@@ -614,6 +619,13 @@
 .doglist .fileinput button{
 	width: 100%;
 	position: absolute;
+}
+
+.doglist .logoutIcon{
+	position: absolute;
+	top: -8.3vh;
+	right:3vh;
+	font-size: 41px;
 }
 
 #upload-file-container {
@@ -627,15 +639,15 @@
    margin-right: auto;
    left: 0;
    right: 0;
-   margin-top: -20vh;
+   margin-top: -15vh;
    background-color: #68B4A6;
 }
 
 #upload-file-container input[type="file"]
 {
-   margin: 0;
-   opacity: 0;   
-   font-size: 100px;
+   position: absolute;
+   color: blue;
+   width: 80vw;
 }
 
 #upload-file-container p{
@@ -675,6 +687,8 @@ input[type="file"]{
    background-color: transparent;
    margin-top: -20%;
 }*/
+
+/* Add Dog */
 
 .adddogmodal{
 	background-color: #ecf0f1;
@@ -941,3 +955,85 @@ input[type="file"]{
 .moreInfo video{
 	display: none;
 }
+
+.myimage{
+	border-radius: 50%;
+	object-fit: cover;
+	width: 30vw;
+	height: 30vh;
+}
+
+/* Thanks Page */
+.thanks .thnksBtn{
+	position: absolute;
+	margin-right: auto;
+	margin-left: auto;
+	left: 0;
+	right: 0;
+	top:70vh;
+	width: 80%;
+	height: 50px;
+	font-family: 'Fredoka One', cursive;
+	background-color: #68B4A6;
+	border: none;
+	border-radius: 10px;
+	font-size: 12px;
+	color: white;
+	font-size: 15px;
+}
+
+/* Walker Tab */
+
+.walker button{
+	width: 80%;
+	height: 50px;
+	top:15vh;
+	border:none;
+	background-color: #EEEEEE;
+	border-radius: 10px;
+	margin-top: 5%;
+}
+.walker button:first-child{
+	margin-top: 40vh;
+}
+
+/* Rating Page */
+
+.rating .finish{
+	margin-top:80vh;
+	width:80%;
+	height:50px;
+	border-radius: 10px;
+	border:none;
+	font-family: 'Fredoka One', cursive;
+	background-color: #68B4A6;
+	color: white;
+	font-size: 20px;
+	text-transform: uppercase;
+}
+
+/* Donate Page */
+
+.donate .pos{
+	margin-top: 30vh;
+}
+
+.donate button{
+	width: 80%;
+	height: 50px;
+	border:none;
+	background-color: #EEEEEE;
+	border-radius: 10px;
+	margin-top: 5%;
+	font-family: 'Fredoka One', cursive;
+	background-color: #68B4A6;
+	color: white;
+	font-size: 20px;
+	text-transform: uppercase;
+}
+.donate button:first-child{
+	margin-top: 40vh;
+}
+
+
+

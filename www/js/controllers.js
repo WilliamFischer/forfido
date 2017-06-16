@@ -1,60 +1,5 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
-
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-  // Form data for the login modal
-  $scope.loginData = {};
-
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
-
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
-
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
-
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
-  };
-})
-
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
-})
-
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-})
-
 .controller('DogSwipeCtrl', function($scope, $stateParams, TDCardDelegate, $timeout, $ionicModal, $ionicPopup, $ionicSideMenuDelegate, $state, store) {
 
   // var theuser = store.get('user');
@@ -171,16 +116,44 @@ angular.module('starter.controllers', [])
 
 .controller('signinCtrl', function($scope, $stateParams, $state, $ionicModal, $timeout, ngFB, store) {
   var fbuser = store.get('user');
-  $scope.hasfb = fbuser;
+  var epuser = store.get('epuser');
 
-  $scope.signin = function(){}
+  $scope.hasfb = fbuser;
+  $scope.hasep = epuser;
+
+  $scope.signin = function(email, password){
+    firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+    });
+
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        $state.go('tabs')
+        var epuser = store.set('epuser', user);
+      } else {
+        console.log("No user")
+      }
+    });
+
+  };
+
+  $scope.eplogout = function(){
+   firebase.auth().signOut().then(function() {
+     console.log("Logged out")
+     store.set('epuser', null);
+     $state.reload()
+    }).catch(function(error) {
+     console.log("Error in Log out")
+   });
+  } 
 
   $scope.logout = function(){
     openFB.logout(
     function() {
      store.set('user', user);
     })
-  }
+  } 
 
   $scope.facebook = function () {
     
@@ -227,11 +200,12 @@ angular.module('starter.controllers', [])
     });
   }
 
+
   firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     console.log(user.email + user.password);
     $state.go('moreInfo')
-    // store.set('epuser', user);
+    store.set('epuser', user);
   } else {
     // No user is signed in.
   }
@@ -271,12 +245,12 @@ angular.module('starter.controllers', [])
     }
 
 
-
-
     $scope.register = function(first, last, address, mobile){
 
       var user = firebase.auth().currentUser;
       var email = user.email;
+      var uid = user.uid;
+
 
       // firebase.auth().onAuthStateChanged(function(user) { 
       //   user.sendEmailVerification(); 
@@ -294,7 +268,7 @@ angular.module('starter.controllers', [])
       //   }
       // });
 
-      var ref = firebase.database().ref().child("Users").child(mobile);
+      var ref = firebase.database().ref().child("Users").child(uid);
 
       if(first && last && address && mobile){
         ref.set({
@@ -332,7 +306,7 @@ angular.module('starter.controllers', [])
         //     });
         //   }   
         // });
-        $state.go('doglist');
+        $state.go('thanks');
       }
       else{
         var alertPopup = $ionicPopup.alert({
@@ -416,7 +390,7 @@ Number.prototype.toRad = function() {
 
   $scope.finishWalk = function(){
     $scope.stopTimer();
-    $state.go('signin');
+    $state.go('rating');
   }
 
   
@@ -441,11 +415,27 @@ Number.prototype.toRad = function() {
   
 })
 
-.controller('DogListCtrl', function($scope, $stateParams, $ionicModal, $firebaseArray, store) {
+.controller('DogListCtrl', function($scope, $stateParams, $ionicModal, $firebaseArray, store, $firebaseObject, $state) {
   $scope.downloaddone = false;
-  
+
   var fbuser = store.get('user');
-  $scope.username = fbuser.name
+  var epuser = store.get('epuser');
+
+  $scope.hasfb = fbuser;
+  $scope.hasep = epuser;
+
+  console.log(epuser)
+
+  if(fbuser){
+    $scope.username = fbuser.name
+  }else{
+    var ref = firebase.database().ref().child("Users").child(epuser.uid).child('fName');
+    var myobj = $firebaseObject(ref)
+    myobj.$loaded().then(function(){
+      $scope.username = myobj.$value;
+      console.log(myobj)
+    })
+  }
 
   $ionicModal.fromTemplateUrl('dogmodal.html', {
     scope: $scope
@@ -464,8 +454,14 @@ Number.prototype.toRad = function() {
   };
 
   $scope.achange = function() {
-    $scope.selectedfile = event.target.files[0]
+    $scope.selectedfile = event.target.files[0];
+    $scope.uploadfile();
+
   }
+
+  $scope.showfile = true;
+  $scope.showloading = false;
+  $scope.showimage = false;
 
   $scope.uploadfile = function() {
     var storageRef = firebase.storage().ref();
@@ -490,6 +486,7 @@ Number.prototype.toRad = function() {
         $scope.status = "Image Uploading"
       }else{
         $scope.status = "Image Done"
+        $scope.dogmodal.show();
       }
 
       console.log($scope.status)
@@ -499,6 +496,11 @@ Number.prototype.toRad = function() {
             break;
           case firebase.storage.TaskState.RUNNING: // or 'running'
             console.log('Upload is running');
+
+            $scope.showfile = false;
+            $scope.showloading = true;
+            $scope.showimage = false;
+
             break;
         }
       }, function(error) {
@@ -506,6 +508,9 @@ Number.prototype.toRad = function() {
       // Upload completed successfully, now we can get the download URL
       var downloadURL = uploadTask.snapshot.downloadURL;
       console.log(downloadURL)
+
+      $scope.me = downloadURL;
+
       $scope.downloaddone = true
     });
   }
@@ -520,5 +525,115 @@ Number.prototype.toRad = function() {
     });
   }
 
+  $scope.logOut=function(){
+    firebase.auth().signOut().then(function() {
+     console.log("Logged out")
+     store.set('epuser', null);
+     $state.go('signin');
+    }).catch(function(error) {
+     console.log("Error in Log out" + error)
+    });
+  }
 
-}); 
+
+})
+
+.controller('walkerCtrl', function($scope, $stateParams, $state, $ionicPopup) {
+
+  $scope.findDog = function(){
+    $state.go('dogswipe')
+    console.log("Should go to dogswipe")
+  }
+
+  $scope.walkDog = function(){
+    $scope.data = {}
+    
+      // Custom popup
+      var myPopup = $ionicPopup.show({
+         template: '<input type = "text" ng-model = "data.model">',
+         title: 'Rexy',
+         subTitle: '',
+         scope: $scope,
+
+         buttons: [
+            {  
+              text: 'Send msg and Cancel Walk',
+              type: 'button-assertive',
+                onTap: function(e) {
+                  return $scope.data.model;
+                },
+              
+            }, 
+              { text: 'Cancel' }, {
+               text: '<b>Walk</b>',
+               type: 'button-positive',
+                  onTap: function(e) {
+                    $state.go("walk");
+                  }
+            }
+         ]
+      });
+
+      myPopup.then(function(res) {
+         console.log('Tapped!', res);
+      });    
+  }
+
+})
+
+.controller('ownerCtrl', function($scope, $stateParams) {
+})
+
+.controller('ratingCtrl', function($scope, $stateParams, $ionicPopup, $state) {
+  $scope.finishRate = function(){
+    $scope.data = {}
+
+    var myPopup = $ionicPopup.show({
+         template: '<input type = "number" ng-model = "data.model" placeholder = "Input amount here">',
+         title: 'We hope you enjoyed the walk!',
+         subTitle: 'Would you like to donate to the RSPCA?',
+         scope: $scope,
+         cssClass: 'forfidopopup',
+
+         buttons: [
+            {  
+              text: 'No Thanks',
+              type: 'button',
+                onTap: function(e) {
+                  $state.go('tabs')
+                },
+              
+            }, 
+            {
+               text: '<b>Yes please</b>',
+               type: 'button-positive',
+                  onTap: function(e) {
+                    if (!$scope.data.model) {
+                        //don't allow the user to close unless he enters model...
+                           e.preventDefault();
+                     } else {
+                        $state.go("donate");
+                     }
+                    
+                  }
+            }
+         ]
+      });
+
+
+  }
+})
+
+.controller('donateCtrl', function($scope, $stateParams, $state) {
+
+  $scope.donate = function(){
+    $state.go('tabs');
+  }
+  $scope.cacel = function(){
+    $state.go('tabs');
+  }
+})
+
+.controller('thanksCtrl', function($scope, $stateParams) {
+});
+

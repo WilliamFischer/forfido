@@ -7,19 +7,21 @@
 		<img src="img/logindog.png" class="dog"></img>
 
 		<label class="item item-input username">
-	    	<input type="text" placeholder="Username" ng-model="username">
+	    	<input type="email" placeholder="Email" ng-model="email">
 	  	</label>
 
 	  	<label class="item item-input password">
 	    	<input type="password" placeholder="Password" ng-model="password">
 	  	</label>
 
-		<button class = "signinbtn" ng-click = "signin()">Sign in</button>
+		<button class = "signinbtn" ng-click = "signin(email, password)">Sign in</button>
 
 
 		<button class = "facebookbtn" ng-click = "logout()" ng-if="hasfb">Logout of facebook</button>
 		<button class = "facebookbtn" ng-click = "facebook()" ng-if="!hasfb">Login with facebook</button>
-		<button class = "registerbtn" ng-click = "register()">Register</button>
+		
+		<button class = "registerbtn" ng-click = "register()" ng-if="!hasep">Register</button>
+		<button class = "registerbtn" ng-click = "eplogout()" ng-if="hasep">Logout</button>
 	</ion-content>
 	
 </ion-view>

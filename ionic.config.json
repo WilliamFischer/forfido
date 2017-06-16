@@ -1,8 +1,5 @@
 {
   "name": "forfido",
-  "app_id": "3bd9c5e8",
-  "type": "ionic1",
-  "watchPatterns": [
-    "scss/**/*"
-  ]
+  "app_id": "e4cb0fed",
+  "type": "ionic1"
 }

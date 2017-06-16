@@ -15,14 +15,5 @@
 
 		<button class = "registerbtn" ng-click = "register(firstname, lastname, data.location.formatted_address, mobile)">Begin!</button>
 
-		<ng-camera
-		    image-format="jpeg"
-		    jpeg-quality="100"
-		    snapshot="vm.picture"
-		    flash-fallback-url="lib/webcamjs/webcam.swf"
-		></ng-camera>
-
-		<img ng-if="vm.picture" ng-src="{{vm.picture}}" alt="webcam picture">
-
     </ion-content>
 </ion-view>
