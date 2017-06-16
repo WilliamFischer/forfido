@@ -1,5 +1,50 @@
 @import url('https://fonts.googleapis.com/css?family=Fredoka+One|Lato:300,400,700');
 
+
+.tabsheader{
+	background-color: #6C6049;
+}
+
+.tabsheader .title{
+	font-family: 'Fredoka One', cursive;
+	color: #68B4A6;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+
+.tabsheader button{
+	color: #68B4A6;
+}
+
+.tabsheader .icon{
+}
+
+.tab-nav {
+	background-color: #6C6049 !important
+}
+
+.tab-nav i{
+	font-size: 24px !important;
+	color: #68B4A6 !important;
+}
+
+.spinner-special{
+  stroke: #68B4A6;
+  fill: #68B4A6;
+}
+
+
+.slideInLeft.ng-leave,
+.slideInLeft > .ng-leave {
+  animation-name: slideOutLeft !important;
+}
+
+.slideInRight.ng-leave,
+.slideInRight > .ng-leave {
+  animation-name: slideOutRight !important;
+}
+
+
 /* DOG PAGE */
 
 .dogpage{
@@ -535,7 +580,7 @@
 	height: 20vh;
 	background-color: #fff;
 	display: block;
-	margin-top: 10%;
+	margin-top: 20%;
 	box-shadow: 0px 0px 5px #8e8e8e;
 }
 
@@ -559,12 +604,14 @@
 }
 
 .doglist .dogcards img{
-	width: 15vh;
-	height: 15vh;
+	width: 450px;
+	height: 450px;
 	margin-top: 5%;
 	float: right;
 	margin-right: 5%;
 	border-radius: 50%;
+	object-fit: cover;
+	overflow: hidden;
 }
 
 .doglist .dogcards h1{
@@ -602,7 +649,7 @@
 } 
 
 .doglist .barbrown{
-	margin-bottom: 10vh;
+	margin-bottom: 20vh;
 	background-color: #6C6049;
 	font-family: 'Fredoka One', cursive;
 	color: #fff;
@@ -623,9 +670,19 @@
 
 .doglist .logoutIcon{
 	position: absolute;
-	top: -8.3vh;
+	top: -7vh;
 	right:3vh;
-	font-size: 41px;
+	font-size: 21px;
+	color: #6C6049;
+}
+
+.doglist .emptytext{
+	margin-top: 20vh;
+	color: green;
+	text-align: center;
+	font-family: 'Lato', sans-serif;
+	font-weight: 700;
+	color: #6C6049;
 }
 
 #upload-file-container {
@@ -826,6 +883,14 @@ input[type="file"]{
 
 /* Walk Page */
 
+.walker{
+	background-color: #ecf0f1 !important;
+}
+
+.view-container{
+	background-color: #ecf0f1 !important;
+}
+
 .walk .timerBG{
 	position: absolute;
 	background-color: #68B4A6;
@@ -982,20 +1047,69 @@ input[type="file"]{
 	font-size: 15px;
 }
 
+
 /* Walker Tab */
 
+<<<<<<< HEAD
 .walker button{
 	width: 80%;
 	height: 50px;
 	top:15vh;
 	border:none;
 	background-color: #EEEEEE;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+/*.walker button{
+	width: 80%;
+	height: 50px;
+=======
+.walker .list{
+>>>>>>> origin/master
+=======
+.walker button{
+	width: 80%;
+	height: 50px;
+>>>>>>> parent of 6c6ff2c... walker page
+	top:15vh;
+	border:none;
+<<<<<<< HEAD
+	font-size: 20px;
+	margin-bottom: 10px;
+}
+
+.walker .card1{
+	font-family: 'Fredoka One', cursive;
+	color: white;
+	background-color: #94766c;
+	border:none;
+	height:20vh;
+	border-radius: 10px;
+	margin-bottom: 20px;
+}
+<<<<<<< HEAD
+.walker button:first-child{
+	margin-top: 40vh;
+}*/
+=======
+
+.walker .card2{
+	font-family: 'Fredoka One', cursive;
+	color: white;
+	background-color: #a6d4de;
+	border:none;
+	height:20vh;
+=======
+	background-color: #EEEEEE;
+>>>>>>> parent of 6c6ff2c... walker page
+>>>>>>> 475a10dc5df563166b7ae5daa2c79d014f443635
 	border-radius: 10px;
 	margin-top: 5%;
 }
 .walker button:first-child{
 	margin-top: 40vh;
 }
+>>>>>>> origin/master
 
 /* Rating Page */
 

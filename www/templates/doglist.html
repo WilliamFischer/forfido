@@ -1,4 +1,4 @@
-<ion-view class="animated slideInLeft doglist">
+<ion-view class="doglist" >
 
 	<script id="dogmodal.html" type="text/ng-template">
 	  <ion-modal-view class="adddogmodal">
@@ -19,35 +19,45 @@
 			<button  class = "upload" ng-click="uploadfile()">Upload Photo</button> -->
 			
 			<center>
-				<input type="text" placeholder="Dog Name" />
-				<input type="text" placeholder="Breed" />
-				<input type="text" placeholder="Type" />
-				<input type="text" placeholder="Temperment" />
-				<textarea placeholder="Special Needs or advice to walkers (if any)"></textarea>
-				<input placeholder="Fitness Level" />
-				<input type="date" placeholder="Age" />
+				<input type="text" placeholder="Dog Name" ng-model="Name"/>
+				<input type="text" placeholder="Breed" ng-model="Breed"/>
+				<input type="text" placeholder="Type" ng-model="Type"/>
+				<input type="text" placeholder="Temperment" ng-model="Temperment"/>
+				<textarea placeholder="Special Needs or advice to walkers (if any)" ng-model="Special"></textarea>
+				<input placeholder="Fitness Level" ng-model="Fitness"/>
+				<input type="date" placeholder="Age" ng-model="Age"/>
 
-				<button class="bakcbutton">Add Dog</button>
+				<button class="bakcbutton" ng-click="registerdog(Name, Breed, Type, Temperment, Special, Fitness, Age)">Add Dog</button>
 			</center>
 			
 	    </ion-content>
 	  </ion-modal-view>
 	</script>
 
-	<center>
+	<div class="bar bar-header tabsheader">
+  		<button class="button button-icon icon ion-person"></button>
+  		<div class="h1 title">{{username}}</div>
+  		<button class="button button-icon icon ion-gear-a" ng-click="logOut()"></button>
+	</div>
 
+	<center>
+ 
 	<ion-content>
-		<img class="facebookprofile" src="https://scontent-syd2-1.xx.fbcdn.net/v/t1.0-9/13882185_1354509061245524_9026815624279005373_n.jpg?oh=098d53ffd53c4f485ed37357de6f1f1c&oe=59AA1BFE" ui-sref="dogswipe">
-		<h1>{{username}}'s Dogs</h1>
-		<div class="dogcards">
-			<h1>Lucky</h1>
-			<h2>Labrodor</h2>
-			<p>A beautiful dog that likes to run and jump and stuff</p>
-			<img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Too-cute-doggone-it-video-playlist.jpg">
+		<!-- <img class="facebookprofile" src="https://scontent-syd2-1.xx.fbcdn.net/v/t1.0-9/13882185_1354509061245524_9026815624279005373_n.jpg?oh=098d53ffd53c4f485ed37357de6f1f1c&oe=59AA1BFE" ui-sref="dogswipe">
+		<h1>{{username}}'s Dogs</h1> -->
+		<div class="emptytext" ng-show="!dogs.length">You dont have any dogs yet</div>
+		
+		<div class="dogcards" ng-repeat="dog in dogs">
+			<h1>{{dog.name}}</h1>
+			<h2>{{dog.breed}}</h2>
+			<p>{{dog.temperment}}</p>
+			<img src="{{dog.photo}}">
 		</div>
-		<div class="logoutIcon">
-			<i class = "icon ion-power" ng-click="logOut()"></i>
-		</div>
+
+
+		<!-- <div class="logoutIcon">
+			<i class = "icon ion-gear-a"></i>
+		</div> -->
 	</ion-content>
 
 	</center>
