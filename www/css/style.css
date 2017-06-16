@@ -1051,6 +1051,14 @@ input[type="file"]{
 /* Walker Tab */
 
 <<<<<<< HEAD
+.walker button{
+	width: 80%;
+	height: 50px;
+	top:15vh;
+	border:none;
+	background-color: #EEEEEE;
+=======
+<<<<<<< HEAD
 <<<<<<< HEAD
 /*.walker button{
 	width: 80%;
@@ -1094,6 +1102,7 @@ input[type="file"]{
 =======
 	background-color: #EEEEEE;
 >>>>>>> parent of 6c6ff2c... walker page
+>>>>>>> 475a10dc5df563166b7ae5daa2c79d014f443635
 	border-radius: 10px;
 	margin-top: 5%;
 }
