@@ -24,7 +24,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'firebase', 'ionic.co
           console.log("signed out of passowrd")
         }).catch(function(error) {});
       }else{
-        $state.go('doglist')
+        $state.go('tabs')
       }
     }else if(epuser){
       console.log("Accessed with Password " + epuser.email)

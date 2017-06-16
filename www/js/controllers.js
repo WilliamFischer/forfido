@@ -141,7 +141,7 @@ angular.module('starter.controllers', [])
   $scope.eplogout = function(){
    firebase.auth().signOut().then(function() {
      console.log("Logged out")
-     store.set('epuser', null);
+     store.remove('epuser');
      $state.reload()
     }).catch(function(error) {
      console.log("Error in Log out")
@@ -151,7 +151,8 @@ angular.module('starter.controllers', [])
   $scope.logout = function(){
     openFB.logout(
     function() {
-     store.set('user', user);
+     store.remove('user');
+     $state.reload()
     })
   } 
 
@@ -219,7 +220,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('moreInfoCtrl', function($scope, $stateParams, $state, $ionicPopup) {
+.controller('moreInfoCtrl', function($scope, $stateParams, $state, $ionicPopup, store) {
 
    $scope.data = {};
     
@@ -248,8 +249,17 @@ angular.module('starter.controllers', [])
     $scope.register = function(first, last, address, mobile){
 
       var user = firebase.auth().currentUser;
-      var email = user.email;
-      var uid = user.uid;
+      var fbuser = store.get('user');
+
+      if(user){
+        var email = user.email;
+        var uid = user.uid;
+      }else{
+        var name = fbuser.name;
+        var uid = fbuser.id;
+
+      }
+      
 
 
       // firebase.auth().onAuthStateChanged(function(user) { 
@@ -272,14 +282,13 @@ angular.module('starter.controllers', [])
 
       if(first && last && address && mobile){
         ref.set({
-          email: email,
+          email: email || name,
           fName: first,
           lName: last,
           address: address,
           mobile: mobile,
           picture: 'none',
-          walkingDogs: [{owner: "mobileNum or name.." , Dogname: "John"}],
-          OwnedDogs: [{Dogname: "John", breed: "Poodle", Location: "CurrentLocation"}] 
+          walkingDogs: [{owner: "mobileNum or name.." , Dogname: "John"}]
         });
 
         // firebase.auth().onAuthStateChanged(function(user) { 
@@ -320,10 +329,8 @@ angular.module('starter.controllers', [])
 })
 
 .controller('walkCtrl', function($scope, $stateParams, $state) {
-
-
-
-    // check for Geolocation support
+  
+  // check for Geolocation support
   if (navigator.geolocation) {
     console.log('Geolocation is supported!');
   }
@@ -415,27 +422,20 @@ Number.prototype.toRad = function() {
   
 })
 
-.controller('DogListCtrl', function($scope, $stateParams, $ionicModal, $firebaseArray, store, $firebaseObject, $state) {
+.controller('DogListCtrl', function($scope, $stateParams, $ionicModal, $firebaseArray, store, $firebaseObject, $state, $ionicPopup, $ionicLoading, $timeout) {
   $scope.downloaddone = false;
-
+  
+  var user = firebase.auth().currentUser;
   var fbuser = store.get('user');
-  var epuser = store.get('epuser');
-
-  $scope.hasfb = fbuser;
-  $scope.hasep = epuser;
-
-  console.log(epuser)
-
-  if(fbuser){
-    $scope.username = fbuser.name
+  
+  if(user){
+    $scope.username = user.uid;
   }else{
-    var ref = firebase.database().ref().child("Users").child(epuser.uid).child('fName');
-    var myobj = $firebaseObject(ref)
-    myobj.$loaded().then(function(){
-      $scope.username = myobj.$value;
-      console.log(myobj)
-    })
+    $scope.username = fbuser.id;
   }
+  
+  var arrayref = firebase.database().ref().child("Users").child($scope.username).child('OwnedDogs');
+  $scope.dogs = $firebaseArray(arrayref)
 
   $ionicModal.fromTemplateUrl('dogmodal.html', {
     scope: $scope
@@ -453,12 +453,102 @@ Number.prototype.toRad = function() {
     $scope.dogmodal.show();
   };
 
-  $scope.achange = function() {
-    $scope.selectedfile = event.target.files[0];
-    $scope.uploadfile();
+  $scope.registerdog = function(Name, Breed, Type, Temperment, Special, Fitness, Age) {
+
+    var ref = firebase.database().ref().child("Users").child($scope.username).child('OwnedDogs');
+    ref.once("value").then(function(snapshot) {
+      $scope.childcount = snapshot.numChildren();
+    });
+
+    if(Name && Breed && Type && Temperment && Special && Fitness && Age){
+      $scope.cango = true
+    }else{
+      $scope.cango = false
+    }
+
+    if($scope.cango){
+
+      if($scope.me){
+        console.log("Done Uploading");
+        ref.child($scope.childcount+1).set({
+          photo: $scope.me,
+          name: Name,
+          breed: Breed,
+          type: Type,
+          temperment: Temperment,
+          specialNeeds: Special,
+          fitness: Fitness,
+          birthday: Age
+        });
+
+        $ionicPopup.alert({
+          title: 'Dog Added',
+          template: 'Congrats!',
+          cssClass: 'forfidopopup'
+        });
+
+        $scope.dogmodal.hide();
+
+      }else if($scope.selectedfile && !$scope.me){
+        console.log("Still Uploading");
+
+         $timeout(function() {
+           $ionicLoading.show({
+            template: '<ion-spinner icon="lines" class="spinner-special"></ion-spinner><br>Adding Dog...',
+            noBackdrop : false
+          });
+        });
+
+        
+
+        $scope.$watch('me', function() {
+          $ionicLoading.hide();
+
+          if($scope.me){
+            ref.child($scope.childcount+1).set({
+              photo: $scope.me,
+              name: Name,
+              breed: Breed,
+              type: Type,
+              temperment: Temperment,
+              specialNeeds: Special,
+              fitness: Fitness,
+              birthday: Age
+            });
+
+            $ionicPopup.alert({
+              title: 'Dog Added',
+              template: 'Congrats!',
+              cssClass: 'forfidopopup'
+            });
+          }
+        });
+
+      }
+
+    }else if(!$scope.selectedfile && !$scope.me){
+        console.log("No Image");
+        $ionicPopup.alert({
+          title: 'No Photo',
+          template: 'Please upload a photo of your dog',
+          cssClass: 'forfidopopup'
+        });
+    } else{
+      $ionicPopup.alert({
+        title: 'Error',
+        template: 'Please fill in all the details!',
+        cssClass: 'forfidopopup'
+      });
+    }
+
 
   }
 
+  $scope.achange = function() {
+    $scope.selectedfile = event.target.files[0];
+    $scope.uploadfile();
+  }
+  
   $scope.showfile = true;
   $scope.showloading = false;
   $scope.showimage = false;
@@ -528,7 +618,6 @@ Number.prototype.toRad = function() {
   $scope.logOut=function(){
     firebase.auth().signOut().then(function() {
      console.log("Logged out")
-     store.set('epuser', null);
      $state.go('signin');
     }).catch(function(error) {
      console.log("Error in Log out" + error)
