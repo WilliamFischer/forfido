@@ -1,0 +1,109 @@
+<ion-view class="dogswipe">
+
+	<script id="dogmodal.html" type="text/ng-template">
+	  <ion-modal-view class="dogpage" on-swipe-down="closedogmodal()" on-swipe-up="closedogmodal()">
+	    <center>
+			<div class="downcirclebox" ng-click="closedogmodal()">
+				<i class="icon greenicon ion-arrow-down-b"></i>
+			</div>
+
+			<img src="http://www.lovethispic.com/uploaded_images/53451-Cute-Dog.jpg" class="dogpicture">
+			<h1 ng-click="specialpopup2()"><span>Lucky</span></h1>
+			<h2>Shiba Inu</h2>
+
+			<h3>Temperment</h3>
+			<div class="row corerow">
+				<div class="col">Very Good</div>
+				<div class="col">
+					<i class="icon happyicon ion-ios-paw"></i>
+				</div>
+			</div>
+
+			<h3>Fitness Level</h3>
+			<div class="row corerow">
+				<div class="col">Very Good</div>
+				<div class="col">
+					<i class="icon happyicon ion-ios-paw"></i>
+				</div>
+			</div>
+
+			<h3>Age</h3>
+			<span class="agenumber">8, born 2009</span>
+
+			<h3 class="needs">Special Needs</h3>
+			<div class="needstextblock">
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+			</div>
+
+		</center>
+	  </ion-modal-view>
+	</script>
+
+	<div class="bar bar-header clearbar">
+	  <button class="button button-icon icon ion-navicon-round" ng-click="toggleLeft()"></button>
+	  <div class="h1 title">{{theusername}}</div>
+	  <button class="button button-icon icon ion-ios-paw" ui-sref="doglist"></button>
+	</div>
+
+    <div ng-if="cards.active">
+    	<td-cards>
+        	<td-card ng-repeat="card in cards.active" on-destroy="cardDestroyed($index)" on-swipe-left="cardSwipedLeft($index)" on-swipe-right="cardSwipedRight($index)" ng-click="opendogmodal()">
+            	<div class="image">
+              		<div class="no-text"><i class="icon ion-close-round"></i></div>
+              		<div class="yes-text"><i class="icon ion-checkmark-round"></i></div>
+
+              		<img ng-src="{{ card.image }}" on-swipe-up="swipedup()">
+           			
+           			<div class="stars row">
+           				<div class="col">
+           					<i class="icon ion-ios-star"></i>
+           				</div>
+           				<div class="col">
+           					<i class="icon ion-ios-star"></i>
+           				</div>
+           				<div class="col">
+           					<i class="icon ion-ios-star-half"></i>
+           				</div>
+           				<div class="col">
+           					<i class="icon ion-ios-star-outline"></i>
+           				</div>
+           				<div class="col">
+           					<i class="icon ion-ios-star-outline"></i>
+           				</div>
+           			</div>
+
+           			<div class="infotext">
+           				<h1>Lucky</h1>
+           				<p>12 year old tame Golden Retriver</p>
+           			</div>
+           		</div>
+          	</td-card>
+
+          	<center class="golow">
+	          	<div class="row">
+	          		<div class="col">
+	          			<div class="iconcircle xcirc" ng-click="specialpopup()">
+	          				<i class="icon ion-close-round"></i>
+	          			</div>
+	          		</div>
+
+	          		<div class="col">
+	          			<div class="iconcircle rcirc" ng-click="specialpopup()">
+	          				<i class="icon ion-refresh"></i>
+	          			</div>
+	          		</div>
+
+	          		<div class="col">
+	          			<div class="iconcircle ccirc" ng-click="specialpopup()">
+	          				<i class="icon ion-checkmark-round"></i>
+	          			</div>
+	          		</div>
+	          	</div>	
+          	</center>
+
+          	<td-card id="end-card" drag="false">
+            	<i class="icon ion-ios-refresh" ng-click="refreshCards()"></i>
+          	</td-card>
+        </td-cards>
+      </div>
+</ion-view>
