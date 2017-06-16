@@ -984,59 +984,17 @@ input[type="file"]{
 
 /* Walker Tab */
 
-.walker .list{
+.walker button{
+	width: 80%;
+	height: 50px;
 	top:15vh;
-	width:85%;
-}
-.walker .item1{
-	font-family: 'Fredoka One', cursive;
-	color: #68B4A6;
-	background-color: white;
 	border:none;
-	font-size: 20px;
-	margin-bottom: 10px;
-}
-
-.walker .item2{
-	font-family: 'Fredoka One', cursive;
-	color: #6C6049;
-	background-color: white;
-	border:none;
-	font-size: 20px;
-	margin-bottom: 10px;
-}
-
-.walker .card1{
-	font-family: 'Fredoka One', cursive;
-	color: white;
-	background-color: #94766c;
-	border:none;
-	height:20vh;
+	background-color: #EEEEEE;
 	border-radius: 10px;
-	margin-bottom: 20px;
+	margin-top: 5%;
 }
-
-.walker .card2{
-	font-family: 'Fredoka One', cursive;
-	color: white;
-	background-color: #a6d4de;
-	border:none;
-	height:20vh;
-	border-radius: 10px;
-	margin-bottom: 20px;
-}
-
-.walker .findDog{
-	margin-top:20vh;
-	width:65%;
-	height:50px;
-	border-radius: 10px;
-	border:none;
-	font-family: 'Fredoka One', cursive;
-	background-color: #6C6049;
-	color: white;
-	font-size: 20px;
-	text-transform: uppercase;
+.walker button:first-child{
+	margin-top: 40vh;
 }
 
 /* Rating Page */

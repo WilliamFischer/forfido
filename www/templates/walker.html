@@ -1,39 +1,10 @@
 <ion-view class = "animated slideInRight walker" view-title="Walker">
 	<ion-content>
-
-	
 	<center>
-	<div class="list">
-		<div class="item1 item-divider">
-		  Schedueled Walks
-		</div>
-
-  		<div class="card1 item-text-wrap" ng-repeat = "dog in dogs" ng-click="walkDog()">
-    		<h1>{{dog.name}}</h1>
-    		<h2>{{dog.time}}</h2>
-    		<h3>{{dog.where}}</h3>
-  		</div>
-
-	  	<div class="item2 item-divider">
-		   Pending requests...
-		</div>
-
-  		<div class="card2 item-text-wrap" ng-repeat = "request in requests">
-    		<td>{{request.name}}</td>
-    		<td>{{request.time}}</td>
-    		<td>{{request.where}}</td>
-  		</div>
-	</div>
-	</center>
-
-	<center>
-	<button class = "findDog" ng-click="findDog()">Find more dogs</button>
-	</center>
-	<!-- <center>
 		<p style = "padding: 10%">This is just buttons for navigation, the walkers doglist will be put into here.</p>
 	
 	<button ng-click = "walkDog()">Walk Dog!</button>
 	<button ng-click = "findDog()">Find dogs!</button>
-	</center> -->
+	</center>
 	</ion-content>
 </ion-view>
